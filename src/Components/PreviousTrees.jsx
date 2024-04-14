@@ -9,21 +9,10 @@ const PreviousTrees = () => {
     fetchTrees();
   }, []);
 
-  const deleteTrees = async () => {
-    try {
-      const response = await axios.delete(
-        "http://localhost:8080/binary-tree/16"
-      );
-      console.log("Data deleted successfully");
-      setTrees(response.data);
-      console.log(trees);
-    } catch (error) {
-      console.error("Error deleting data:", error.message);
-    }
-  };
   const fetchTrees = async () => {
     try {
       const response = await axios.get("http://localhost:8080/binary-tree");
+      console.log(response.data);
       setTrees(response.data);
     } catch (error) {
       console.error("Error fetching data:", error.message);
@@ -34,16 +23,23 @@ const PreviousTrees = () => {
     <div>
       <h1>Previous Trees</h1>
       <table>
+        <thead>
+          <tr>
+            <th>Root</th>
+            <th>Left</th>
+            <th>Right</th>
+          </tr>
+        </thead>
         <tbody>
-          {trees.map((data, index) => (
-            <tr key={index}>
-              <td>{data.inputNumbers}</td>
+          {trees.map((item) => (
+            <tr key={item.id}>
+              <td>{item.root}</td>
+              <td>{item.left ? item.left.root : "null"}</td>
+              <td>{item.right ? item.right.root : "null"}</td>
             </tr>
           ))}
         </tbody>
       </table>
-
-      <button onClick={deleteTrees}>Delete Trees</button>
     </div>
   );
 };

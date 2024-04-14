@@ -4,6 +4,9 @@ import { useState } from "react";
 
 const ProcessNumbers = () => {
   const [trees, setTrees] = useState([]);
+  useEffect(() => {
+    fetchTrees();
+  }, []);
 
   const fetchTrees = async () => {
     try {
@@ -14,22 +17,18 @@ const ProcessNumbers = () => {
     }
   };
 
-  useEffect(() => {
-    fetchTrees();
-  }, []);
-
   return (
     <div>
       <h1>Process Numbers</h1>
-      <table>
-        <tbody>
-          {trees.map((data, index) => (
-            <tr key={index}>
-              <td>{data.inputNumbers}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div>
+        {trees.map((item) => (
+          <div key={item.id}>
+            <p>Root: {item.root}</p>
+            <p>Left: {item.left ? item.left.id : "null"}</p>
+            <p>Right: {item.right ? item.right.id : "null"}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

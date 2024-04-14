@@ -9,18 +9,25 @@ const EnterNumbers = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log("Process Numbers");
-    console.log(numbers);
-    if (numbers != "") {
+    const nums = numbers
+      .split(",")
+      .map(Number)
+      .filter((num) => !isNaN(num));
+
+    console.log(nums);
+
+    if (nums != "") {
       try {
         const response = await axios.post(
           "http://localhost:8080/binary-tree",
-          numbers
+          nums
         );
         if (response.status !== 200)
           throw new Error("Failed to add binary tree");
         console.log("Binary tree added successfully");
       } catch (error) {
         console.error("Error adding binary tree: ", error.message);
+        
       }
       navigate("/process-numbers");
     }
